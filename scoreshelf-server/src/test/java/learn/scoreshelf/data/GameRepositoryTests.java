@@ -1,5 +1,6 @@
 package learn.scoreshelf.data;
 
+import learn.scoreshelf.TestHelper;
 import learn.scoreshelf.models.Game;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import java.util.List;
+import learn.scoreshelf.TestHelper.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class GameRepositoryTests {
+
+    private final TestHelper helper = new TestHelper();
 
     @Autowired
     GameRepository repository;
@@ -57,7 +61,7 @@ class GameRepositoryTests {
     //Add
     @Test
     void shouldAddGame() {
-        Game game = makeGame();
+        Game game = helper.makeGame();
 
         Game actual = repository.add(game);
 
@@ -97,7 +101,7 @@ class GameRepositoryTests {
 
     @Test
     void shouldNotUpdateMissingGame() {
-        Game game = makeGame();
+        Game game = helper.makeGame();
         game.setGameId(999);
 
         assertFalse(repository.update(game));
@@ -106,8 +110,11 @@ class GameRepositoryTests {
     //Delete
     @Test
     void shouldDeleteGame() {
-        assertTrue(repository.deleteById(3));
-        assertNull(repository.findById(3));
+        Game game = helper.makeGame();
+        Game added = repository.add(game);
+
+        assertTrue(repository.deleteById(added.getGameId()));
+        assertNull(repository.findById(added.getGameId()));
     }
 
     @Test
@@ -115,17 +122,4 @@ class GameRepositoryTests {
         assertFalse(repository.deleteById(999));
     }
 
-
-    //Helpers
-    private Game makeGame() {
-        Game game = new Game();
-        game.setGameName("Terraforming Mars");
-        game.setCategory("Strategy");
-        game.setMinPlayers(1);
-        game.setMaxPlayers(5);
-        game.setPrivate(false);
-        game.setAppUserId(1);
-
-        return game;
-    }
 }

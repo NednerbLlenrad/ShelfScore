@@ -186,7 +186,74 @@ begin
             false,
             2
         );
+    insert into score_sheet (
+        game_id,
+        score_sheet_name
+    )
+    values
+        (
+            1,
+            'Default Wingspan Score Sheet'
+        ),
+        (
+            2,
+            'Default Catan Score Sheet'
+        ),
+        (
+            3,
+            'Default Skull Score Sheet'
+        );
 
+    insert into score_sheet_row (
+        score_sheet_id,
+        row_name,
+        display_order,
+        row_type,
+        expression
+    )
+    values
+        (
+            1,
+            'Birds',
+            1,
+            'INPUT',
+            null
+        ),
+        (
+            1,
+            'Bonus Cards',
+            2,
+            'INPUT',
+            null
+        ),
+        (
+            1,
+            'Total',
+            3,
+            'TOTAL',
+            null
+        ),
+        (
+            2,
+            'Victory Points',
+            1,
+            'INPUT',
+            null
+        ),
+        (
+            2,
+            'Longest Road',
+            2,
+            'INPUT',
+            null
+        ),
+        (
+            2,
+            'Total',
+            3,
+            'TOTAL',
+            null
+        );
 end //
 
 delimiter ;
