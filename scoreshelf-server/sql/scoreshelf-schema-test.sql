@@ -254,6 +254,60 @@ begin
             'TOTAL',
             null
         );
+    
+insert into game_session (
+    game_id,
+    app_user_id,
+    played_at
+)
+values
+    (
+        1,
+        1,
+        '2026-05-11 10:00:00'
+    ),
+    (
+        2,
+        1,
+        '2026-05-11 12:00:00'
+    );
+
+insert into game_session_player (
+    game_session_id,
+    player_id,
+    player_name,
+    total_score,
+    is_winner
+)
+values
+    (
+        1,
+        null,
+        'Brenden',
+        45,
+        false
+    ),
+    (
+        1,
+        null,
+        'Sally',
+        52,
+        true
+    ),
+    (
+        2,
+        null,
+        'Brenden',
+        8,
+        false
+    ),
+    (
+        2,
+        null,
+        'Jake',
+        10,
+        true
+    );
 end //
 
 delimiter ;

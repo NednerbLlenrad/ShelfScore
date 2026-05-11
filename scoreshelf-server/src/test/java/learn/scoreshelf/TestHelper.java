@@ -45,4 +45,15 @@ public class TestHelper {
 
         return session;
     }
+
+    public GameSessionPlayer makeGameSessionPlayer() {
+        GameSessionPlayer player = new GameSessionPlayer();
+        player.setGameSessionId(1);
+        player.setPlayerId(null);
+        player.setPlayerName("Jake");
+        player.setTotalScore(31);
+        player.setIsWinner(false);
+
+        return player;
+    }
 }
