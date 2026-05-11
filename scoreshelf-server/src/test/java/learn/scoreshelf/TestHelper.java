@@ -1,9 +1,8 @@
 package learn.scoreshelf;
 
-import learn.scoreshelf.models.Game;
-import learn.scoreshelf.models.RowType;
-import learn.scoreshelf.models.ScoreSheet;
-import learn.scoreshelf.models.ScoreSheetRow;
+import learn.scoreshelf.models.*;
+
+import java.time.LocalDateTime;
 
 public class TestHelper {
 
@@ -36,5 +35,14 @@ public class TestHelper {
         row.setExpression(null);
 
         return row;
+    }
+
+    public GameSession makeGameSession() {
+        GameSession session = new GameSession();
+        session.setGameId(2);
+        session.setAppUserId(1);
+        session.setPlayedAt(LocalDateTime.of(2026, 5, 11, 10, 30));
+
+        return session;
     }
 }
