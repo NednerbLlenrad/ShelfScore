@@ -1,7 +1,9 @@
 package learn.scoreshelf;
 
 import learn.scoreshelf.models.Game;
+import learn.scoreshelf.models.RowType;
 import learn.scoreshelf.models.ScoreSheet;
+import learn.scoreshelf.models.ScoreSheetRow;
 
 public class TestHelper {
 
@@ -23,5 +25,16 @@ public class TestHelper {
         scoreSheet.setScoreSheetName("Default Catan Score Sheet");
 
         return scoreSheet;
+    }
+
+    public ScoreSheetRow makeScoreSheetRow() {
+        ScoreSheetRow row = new ScoreSheetRow();
+        row.setScoreSheetId(1);
+        row.setRowName("Birds");
+        row.setDisplayOrder(1);
+        row.setRowType(RowType.INPUT);
+        row.setExpression(null);
+
+        return row;
     }
 }
