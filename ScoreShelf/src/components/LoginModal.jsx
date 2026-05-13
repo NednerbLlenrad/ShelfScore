@@ -35,9 +35,12 @@ function LoginModal({ onClose, setUser }) {
                 return response.json();
             })
             .then((data) => {
-                console.log("Logged in user:", data);
+                console.log("Logged in:", data);
 
-                setUser(data);
+                setUser(data.appUser);
+
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("user", JSON.stringify(data.appUser));
 
                 onClose();
             })
