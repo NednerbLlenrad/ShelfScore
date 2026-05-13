@@ -44,7 +44,13 @@ function RegisterModal({ onClose }) {
         return response.json();
       })
       .then((data) => {
-        console.log("Registered user:", data);
+        console.log("Registered:", data);
+
+        setUser(data.appUser);
+
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.appUser));
+
         onClose();
       })
       .catch((error) => {

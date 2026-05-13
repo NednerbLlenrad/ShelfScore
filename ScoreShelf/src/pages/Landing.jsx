@@ -18,7 +18,12 @@ function Landing({ user, setUser }) {
                 <NavBar
                     isLoggedIn={user !== null}
                     onLoginClick={() => setShowLogin(true)}
-                    onLogout={() => setUser(null)}
+                    onLogout={() => {
+                        setUser(null);
+
+                        localStorage.removeItem("token");
+                        localStorage.removeItem("user");
+                    }}
                 />
 
                 <section className="landing-card">
@@ -61,7 +66,7 @@ function Landing({ user, setUser }) {
                 )}
 
                 {showRegister && (
-                    <RegisterModal onClose={() => setShowRegister(false)} />
+                    <RegisterModal onClose={() => setShowRegister(false)} setUser={setUser} />
                 )}
             </main>
         </Background>
