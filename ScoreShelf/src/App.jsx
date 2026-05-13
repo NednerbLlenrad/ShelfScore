@@ -1,15 +1,10 @@
-import { Routes, Route } from "react-router-dom";
-
+import { useState } from "react";
 import Landing from "./pages/Landing";
-import Login from "./components/LoginModal";
-import Register from "./components/RegisterModal";
 
 function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<Landing />} />
-    </Routes>
-  );
+  const [user, setUser] = useState(null);
+
+  return <Landing user={user} setUser={setUser} />;
 }
 
 export default App;

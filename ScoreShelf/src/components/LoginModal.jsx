@@ -1,32 +1,77 @@
 import "./LoginModal.css";
+import { useState } from "react";
+function LoginModal({ onClose, setUser }) {
 
-function LoginModal({ onClose }) {
-  return (
-    <div className="modal-backdrop">
-      <section className="login-card modal-card">
-        <button className="modal-close" type="button" onClick={onClose}>
-          ×
-        </button>
+    const [credentials, setCredentials] = useState({
+        username: "",
+        password: "",
+    });
 
-        <h1>Login</h1>
-        <p>Let's get back to scoring!</p>
+    function handleChange(event) {
+        setCredentials({
+            ...credentials,
+            [event.target.name]: event.target.value
+        });
+    }
 
-        <form className="login-form">
-          <label>
-            Username
-            <input type="text" name="username" />
-          </label>
+    function handleSubmit(event) {
+        event.preventDefault();
 
-          <label>
-            Password
-            <input type="password" name="password" />
-          </label>
+        fetch("http://localhost:8080/api/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(credentials)
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    return response.json().then((errors) => {
+                        console.log(errors);
+                        throw new Error("Login failed.");
+                    });
+                }
 
-          <button type="submit">Log In</button>
-        </form>
-      </section>
-    </div>
-  );
+                return response.json();
+            })
+            .then((data) => {
+                console.log("Logged in user:", data);
+
+                setUser(data);
+
+                onClose();
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    return (
+        <div className="modal-backdrop">
+            <section className="login-card modal-card">
+                <button className="modal-close" type="button" onClick={onClose}>
+                    ×
+                </button>
+
+                <h1>Login</h1>
+                <p>Let's get back to scoring!</p>
+
+                <form className="login-form" onSubmit={handleSubmit}>
+                    <label>
+                        Username
+                        <input type="text" name="username" value={credentials.username} onChange={handleChange} />
+                    </label>
+
+                    <label>
+                        Password
+                        <input type="password" name="password" value={credentials.password} onChange={handleChange} />
+                    </label>
+
+                    <button type="submit">Log In</button>
+                </form>
+            </section>
+        </div>
+    );
 }
 
 export default LoginModal;

@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import Logo from "../assets/Logo.svg";
 import "./NavBar.css";
 
-function NavBar({ isLoggedIn, onLoginClick }) {
+function NavBar({ isLoggedIn, onLoginClick, onLogout }) {
     return (
         <nav className="navbar">
             <div className="navbar-left">
@@ -36,7 +36,9 @@ function NavBar({ isLoggedIn, onLoginClick }) {
                             Account
                         </NavLink>
 
-                        <button>Logout</button>
+                        <button className="logout-button" type="button" onClick={onLogout}>
+                            Logout
+                        </button>
                     </>
                 ) : (
                     <button className="login-link" type="button" onClick={onLoginClick}>
