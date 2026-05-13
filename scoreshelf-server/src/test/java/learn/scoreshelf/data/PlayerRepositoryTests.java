@@ -34,7 +34,7 @@ class PlayerRepositoryTests {
         List<Player> players = repository.findAll();
 
         assertNotNull(players);
-        assertEquals(2, players.size());
+        assertEquals(3, players.size());
     }
 
     @Test
@@ -76,7 +76,7 @@ class PlayerRepositoryTests {
         Player saved = repository.findById(actual.getPlayerId());
 
         assertEquals(1, saved.getAppUserId());
-        assertEquals("Jake", saved.getPlayerName());
+        assertEquals("bob", saved.getPlayerName());
         assertNull(saved.getLinkedAppUserId());
     }
 

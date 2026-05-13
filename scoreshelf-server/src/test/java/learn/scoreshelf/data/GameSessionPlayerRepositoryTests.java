@@ -77,7 +77,7 @@ class GameSessionPlayerRepositoryTests {
         GameSessionPlayer saved = repository.findById(actual.getGameSessionPlayerId());
 
         assertEquals(1, saved.getGameSessionId());
-        assertEquals("Jake", saved.getPlayerName());
+        assertEquals("Test Player", saved.getPlayerName());
         assertEquals(31, saved.getTotalScore());
         assertFalse(saved.getIsWinner());
     }

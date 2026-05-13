@@ -84,7 +84,7 @@ class GameSessionRepositoryTests {
 
         GameSession saved = repository.findById(actual.getGameSessionId());
 
-        assertEquals(2, saved.getGameId());
+        assertEquals(1, saved.getGameId());
         assertEquals(1, saved.getAppUserId());
         assertNotNull(saved.getPlayedAt());
     }
