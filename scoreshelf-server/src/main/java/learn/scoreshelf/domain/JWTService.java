@@ -32,4 +32,25 @@ public class JWTService {
                 .compact();
     }
 
+    public String getUsernameFromToken(String token){
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .getSubject();
+    }
+
+    public boolean isTokenValid(String token){
+        try{
+            Jwts.parser()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(token);
+            return true;
+        } catch (Exception ex){
+            return false;
+        }
+    }
+
 }
