@@ -75,6 +75,26 @@ public class AppUserRepositoryJdbcClient implements AppUserRepository {
     }
 
     @Override
+    public AppUser findByEmail(String email) {
+
+        final String sql = """
+            select
+                app_user_id,
+                username,
+                email,
+                password_hash
+            from app_user
+            where email = ?;
+            """;
+
+        return jdbcClient.sql(sql)
+                .param(email)
+                .query(new AppUserMapper())
+                .optional()
+                .orElse(null);
+    }
+
+    @Override
     public AppUser add(AppUser appUser) {
 
         final String sql = """
