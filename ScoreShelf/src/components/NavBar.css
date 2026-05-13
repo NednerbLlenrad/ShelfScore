@@ -55,13 +55,15 @@
 }
 
 .login-link {
+
   background-color: #2979ff;
 
   color: white;
   text-decoration: none;
 
   padding: 0.55rem 1.1rem;
-
+  
+  border: none;
   border-radius: 0.45rem;
 
   font-size: 0.8rem;
@@ -88,22 +90,29 @@
 }
 
 .logout-button {
-  background-color: #ff2929;
+  background-color: #dc2626;
 
   color: white;
   text-decoration: none;
 
-  padding: 0.2rem .5rem;
+  padding: 0.55rem 1.1rem;
+
+  border: none;
+  outline: none;
+
+  appearance: none;
 
   border-radius: 0.45rem;
 
   font-size: 0.8rem;
   font-weight: 700;
 
+  cursor: pointer;
+
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
 
   box-shadow:
-    0 0 20px rgba(255, 41, 41, 0.25);
+    0 0 20px rgba(220, 38, 38, 0.25);
 
   transition:
     transform 0.2s ease,
@@ -112,10 +121,10 @@
 }
 
 .logout-button:hover {
-  background-color: #ff4d4d;
+  background-color: #ef4444;
 
   transform: translateY(-2px);
 
   box-shadow:
-    0 0 30px rgba(255, 41, 41, 0.4);
+    0 0 30px rgba(220, 38, 38, 0.4);
 }

@@ -13,7 +13,7 @@ import java.time.Instant;
 @Service
 public class JWTService {
 
-    private final String secret = "secret-string";
+    private final String secret = "secret-string-very-long-message-of-secret-words-that-no-one-can-guess-ever";
 
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
