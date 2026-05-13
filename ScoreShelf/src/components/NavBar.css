@@ -86,3 +86,36 @@
   box-shadow:
     0 0 30px rgba(41, 121, 255, 0.4);
 }
+
+.logout-button {
+  background-color: #ff2929;
+
+  color: white;
+  text-decoration: none;
+
+  padding: 0.2rem .5rem;
+
+  border-radius: 0.45rem;
+
+  font-size: 0.8rem;
+  font-weight: 700;
+
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+
+  box-shadow:
+    0 0 20px rgba(255, 41, 41, 0.25);
+
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.logout-button:hover {
+  background-color: #ff4d4d;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 0 30px rgba(255, 41, 41, 0.4);
+}
