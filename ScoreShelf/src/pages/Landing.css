@@ -1,5 +1,5 @@
 .landing-image {
-    width: 100%;
+    width: 200%;
     max-width: 900px;
 
     display: block;
@@ -28,10 +28,11 @@
 }
 
 .sign-up-button {
-    background-color: #00c853;
+    background-color: #2979ff;
+
     display: block;
-    margin: 0 auto;
-    margin-top: 3rem;
+
+    margin: 3rem auto 0 auto;
 
     color: white;
 
@@ -51,14 +52,14 @@
         box-shadow 0.2s ease;
 
     box-shadow:
-        0 0 20px rgba(0, 200, 83, 0.25);
+        0 0 20px rgba(41, 121, 255, 0.3);
 }
 
 .sign-up-button:hover {
-    background-color: #14d866;
+    background-color: #4d94ff;
 
     transform: translateY(-2px);
 
     box-shadow:
-        0 0 30px rgba(0, 200, 83, 0.4);
+        0 0 30px rgba(41, 121, 255, 0.45);
 }
