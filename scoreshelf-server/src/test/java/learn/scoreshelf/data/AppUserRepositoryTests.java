@@ -75,8 +75,8 @@ class AppUserRepositoryTests {
 
         AppUser saved = repository.findById(actual.getAppUserId());
 
-        assertEquals("jake", saved.getUsername());
-        assertEquals("jake@test.com", saved.getEmail());
+        assertEquals("bob", saved.getUsername());
+        assertEquals("bob@test.com", saved.getEmail());
     }
 
     //Update

@@ -254,62 +254,44 @@ begin
             'TOTAL',
             null
         );
-    
-insert into game_session (
-    game_id,
-    app_user_id,
-    played_at
-)
-values
-    (
-        1,
-        1,
-        '2026-05-11 10:00:00'
-    ),
-    (
-        2,
-        1,
-        '2026-05-11 12:00:00'
-    );
+        insert into player (
+        app_user_id,
+        player_name,
+        linked_app_user_id
+    )
+    values
+        (1, 'Brenden', 1),
+        (1, 'Jake', null),
+        (2, 'Sally', 2);
 
-insert into game_session_player (
-    game_session_id,
-    player_id,
-    player_name,
-    total_score,
-    is_winner
-)
-values
-    (
-        1,
-        null,
-        'Brenden',
-        45,
-        false
-    ),
-    (
-        1,
-        null,
-        'Sally',
-        52,
-        true
-    ),
-    (
-        2,
-        null,
-        'Brenden',
-        8,
-        false
-    ),
-    (
-        2,
-        null,
-        'Jake',
-        10,
-        true
-    );
+    insert into game_session (
+        game_id,
+        app_user_id,
+        played_at
+    )
+    values
+        (1, 1, '2026-05-11 10:00:00'),
+        (2, 1, '2026-05-11 12:00:00');
+
+    insert into game_session_player (
+        game_session_id,
+        player_id,
+        player_name,
+        total_score,
+        is_winner
+    )
+    values
+        (1, 1, 'Brenden', 45, false),
+        (1, 3, 'Sally', 52, true),
+        (2, 1, 'Brenden', 8, false),
+        (2, 2, 'Jake', 10, true);
+
+    insert into score_entry (
+        game_session_player_id,
+        score_sheet_row_id,
+        value
+    )
+    values
+        (1, 1, 20),
+        (1, 2, 25);
 end //
-
-delimiter ;
-
-call set_known_good_state();
