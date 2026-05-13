@@ -1,9 +1,6 @@
 package learn.scoreshelf;
 
-import learn.scoreshelf.models.Game;
-import learn.scoreshelf.models.RowType;
-import learn.scoreshelf.models.ScoreSheet;
-import learn.scoreshelf.models.ScoreSheetRow;
+import learn.scoreshelf.models.*;
 
 public class TestHelper {
 
@@ -36,5 +33,14 @@ public class TestHelper {
         row.setExpression(null);
 
         return row;
+    }
+
+    public ScoreEntry makeScoreEntry() {
+        ScoreEntry entry = new ScoreEntry();
+        entry.setGameSessionPlayerId(1);
+        entry.setScoreSheetRowId(1);
+        entry.setValue(12);
+
+        return entry;
     }
 }
