@@ -9,7 +9,7 @@ public class AppUser {
     private int appUserId;
 
     @NotBlank(message = "Username is required.")
-    @Size(max = 50, message = "Username must be 50 characters or less.")
+    @Size(max = 30, message = "Username must be 30 characters or less.")
     private String username;
 
     @NotBlank(message = "Email is required.")
