@@ -43,4 +43,13 @@ public class TestHelper {
 
         return entry;
     }
+
+    public Player makePlayer() {
+        Player player = new Player();
+        player.setAppUserId(1);
+        player.setPlayerName("Jake");
+        player.setLinkedAppUserId(null);
+
+        return player;
+    }
 }
