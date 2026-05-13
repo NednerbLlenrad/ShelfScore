@@ -52,4 +52,14 @@ public class TestHelper {
 
         return player;
     }
+
+    public AppUser makeAppUser() {
+        AppUser user = new AppUser();
+
+        user.setUsername("jake");
+        user.setEmail("jake@test.com");
+        user.setPasswordHash("hashed-password");
+
+        return user;
+    }
 }
