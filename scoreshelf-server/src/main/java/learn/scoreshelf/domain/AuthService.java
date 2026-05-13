@@ -1,10 +1,7 @@
 package learn.scoreshelf.domain;
 
 import learn.scoreshelf.data.AppUserRepository;
-import learn.scoreshelf.models.AppUser;
-import learn.scoreshelf.models.AppUserResponse;
-import learn.scoreshelf.models.LoginRequest;
-import learn.scoreshelf.models.RegisterRequest;
+import learn.scoreshelf.models.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +10,20 @@ public class AuthService {
 
     private final AppUserRepository repository;
     private final PasswordEncoder passwordEncoder;
+    private final JWTService jwtService;
 
-    public AuthService(AppUserRepository repository, PasswordEncoder passwordEncoder) {
+    public AuthService(
+            AppUserRepository repository,
+            PasswordEncoder passwordEncoder,
+            JWTService jwtService
+    ) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
-    public Result<AppUserResponse> register(RegisterRequest registerRequest){
-        Result<AppUserResponse> result = new Result<>();
+    public Result<AuthResponse> register(RegisterRequest registerRequest){
+        Result<AuthResponse> result = new Result<>();
 
         if(registerRequest == null) {
             result.addMessage("Registration request cannot be null.", ResultType.INVALID);
@@ -63,14 +66,14 @@ public class AuthService {
         user.setPasswordHash(passwordEncoder.encode(registerRequest.getPassword()));
 
         user = repository.add(user);
-        result.setPayload(makeResponse(user));
+        result.setPayload(makeAuthResponse(user));
 
         return result;
     }
 
-    public Result<AppUserResponse> login(LoginRequest request) {
+    public Result<AuthResponse> login(LoginRequest request) {
 
-        Result<AppUserResponse> result = new Result<>();
+        Result<AuthResponse> result = new Result<>();
 
         if (request == null) {
             result.addMessage("Login request cannot be null.", ResultType.INVALID);
@@ -96,7 +99,7 @@ public class AuthService {
             return result;
         }
 
-        result.setPayload(makeResponse(user));
+        result.setPayload(makeAuthResponse(user));
         return result;
     }
 
@@ -107,6 +110,16 @@ public class AuthService {
         response.setAppUserId(user.getAppUserId());
         response.setUsername(user.getUsername());
         response.setEmail(user.getEmail());
+
+        return response;
+    }
+
+    private AuthResponse makeAuthResponse(AppUser user) {
+
+        AuthResponse response = new AuthResponse();
+
+        response.setToken(jwtService.generateToken(user));
+        response.setAppUser(makeResponse(user));
 
         return response;
     }
