@@ -2,8 +2,6 @@ package learn.scoreshelf;
 
 import learn.scoreshelf.models.*;
 
-import java.time.LocalDateTime;
-
 public class TestHelper {
 
     public Game makeGame() {
@@ -37,23 +35,12 @@ public class TestHelper {
         return row;
     }
 
-    public GameSession makeGameSession() {
-        GameSession session = new GameSession();
-        session.setGameId(2);
-        session.setAppUserId(1);
-        session.setPlayedAt(LocalDateTime.of(2026, 5, 11, 10, 30));
+    public ScoreEntry makeScoreEntry() {
+        ScoreEntry entry = new ScoreEntry();
+        entry.setGameSessionPlayerId(1);
+        entry.setScoreSheetRowId(1);
+        entry.setValue(12);
 
-        return session;
-    }
-
-    public GameSessionPlayer makeGameSessionPlayer() {
-        GameSessionPlayer player = new GameSessionPlayer();
-        player.setGameSessionId(1);
-        player.setPlayerId(null);
-        player.setPlayerName("Jake");
-        player.setTotalScore(31);
-        player.setIsWinner(false);
-
-        return player;
+        return entry;
     }
 }
