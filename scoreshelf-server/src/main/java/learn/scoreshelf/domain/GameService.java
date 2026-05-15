@@ -23,6 +23,14 @@ public class GameService {
         return repository.findById(gameId);
     }
 
+    public List<Game> findPublicGames() {
+        return repository.findPublicGames();
+    }
+
+    public List<Game> findAccessibleGames(int appUserId) {
+        return repository.findAccessibleGames(appUserId);
+    }
+
     public Result<Game> add(Game game) {
 
         Result<Game> result = validate(game);
@@ -85,6 +93,10 @@ public class GameService {
         }
 
         return result;
+    }
+
+    public List<Game> findByAppUserId(int appUserId) {
+        return repository.findByAppUserId(appUserId);
     }
 }
 

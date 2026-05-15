@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import Logo from "../assets/Logo.svg";
 import "./NavBar.css";
 
-function NavBar({ isLoggedIn, onLoginClick, onLogout }) {
+function NavBar({ isLoggedIn, onLoginClick, onLogout, openLogin }) {
     return (
         <nav className="navbar">
             <div className="navbar-left">
@@ -19,9 +19,19 @@ function NavBar({ isLoggedIn, onLoginClick, onLogout }) {
                         All Games
                     </NavLink>
 
-                    <NavLink className="custom-link" to="/my-games">
-                        My Games
-                    </NavLink>
+                    {isLoggedIn ? (
+                        <NavLink className="custom-link" to="/my-games">
+                            My Games
+                        </NavLink>
+                    ) : (
+                        <button
+                            className="my-games-button"
+                            type="button"
+                            onClick={onLoginClick}
+                        >
+                            My Games
+                        </button>
+                    )}
 
                     <NavLink className="custom-link" to="/stats">
                         Stats

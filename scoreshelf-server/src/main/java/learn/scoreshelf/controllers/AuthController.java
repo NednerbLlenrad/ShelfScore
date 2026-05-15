@@ -3,6 +3,7 @@ package learn.scoreshelf.controllers;
 import learn.scoreshelf.domain.AuthService;
 import learn.scoreshelf.domain.Result;
 import learn.scoreshelf.models.AppUserResponse;
+import learn.scoreshelf.models.AuthResponse;
 import learn.scoreshelf.models.LoginRequest;
 import learn.scoreshelf.models.RegisterRequest;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody RegisterRequest request) {
-        Result<AppUserResponse> result = service.register(request);
+        Result<AuthResponse> result = service.register(request);
 
         if (!result.isSuccess()) {
             return ErrorResponse.build(result);
@@ -32,7 +33,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody LoginRequest request) {
-        Result<AppUserResponse> result = service.login(request);
+        Result<AuthResponse> result = service.login(request);
 
         if (!result.isSuccess()) {
             return ErrorResponse.build(result);
@@ -40,4 +41,6 @@ public class AuthController {
 
         return ResponseEntity.ok(result.getPayload());
     }
+
+
 }

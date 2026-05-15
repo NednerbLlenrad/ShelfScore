@@ -1,0 +1,41 @@
+.games-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 2rem;
+}
+
+.games-header p {
+    color: #c7d0d9;
+}
+
+.add-game-button {
+    background-color: #2979ff;
+
+    color: white;
+    text-decoration: none;
+
+    padding: 0.7rem 1.2rem;
+
+    border-radius: 0.5rem;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 0 20px rgba(41, 121, 255, 0.25);
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.add-game-button:hover {
+    background-color: #4d94ff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 30px rgba(41, 121, 255, 0.4);
+}

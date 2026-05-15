@@ -7,16 +7,25 @@ export function getToken() {
 export async function apiFetch(path, options = {}) {
     const token = getToken();
 
+    const isFormData = options.body instanceof FormData;
+
     const response = await fetch(`${API_URL}${path}`, {
         ...options,
+
         headers: {
-            "Content-Type": "application/json",
-            ...(token ? { Authorization: `Bearer ${token}`} : {}),
+            ...(isFormData
+                ? {}
+                : { "Content-Type": "application/json" }),
+
+            ...(token
+                ? { Authorization: `Bearer ${token}` }
+                : {}),
+
             ...options.headers
         }
     });
 
-    if(!response.ok){
+    if (!response.ok) {
         throw new Error(`Request failed with status ${response.status}`);
     }
 
