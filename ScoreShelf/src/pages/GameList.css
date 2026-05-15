@@ -1,0 +1,24 @@
+.games-page {
+    min-height: 100vh;
+    color: whitesmoke;
+}
+
+.games-content {
+    width: min(90%, 1100px);
+    margin: 4rem auto;
+}
+
+.games-content h1 {
+    margin-bottom: 2rem;
+}
+
+.games-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, 260px);
+
+    justify-content: center;
+
+    gap: 1.5rem;
+}

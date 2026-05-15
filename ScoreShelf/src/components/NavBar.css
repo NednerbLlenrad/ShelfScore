@@ -72,6 +72,11 @@
   box-shadow:
     0 0 20px rgba(41, 121, 255, 0.25);
 
+  border: none;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+
   transition:
     transform 0.2s ease,
     background-color 0.2s ease,
@@ -105,6 +110,11 @@
   box-shadow:
     0 0 20px rgba(255, 41, 41, 0.25);
 
+  border: none;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+
   transition:
     transform 0.2s ease,
     background-color 0.2s ease,
@@ -118,4 +128,35 @@
 
   box-shadow:
     0 0 30px rgba(255, 41, 41, 0.4);
+}
+
+.my-games-button {
+  color: #c7d0d9;
+
+  text-decoration: none;
+
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+
+  font-size: 0.72rem;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  background: none;
+
+  border: none;
+  outline: none;
+
+  appearance: none;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.my-games-button:hover {
+  color: white;
 }

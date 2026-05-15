@@ -8,7 +8,7 @@ import RegisterModal from "../components/RegisterModal";
 import "./Landing.css";
 import LandingPage from "../assets/LandingPage.svg";
 
-function Landing({ user, setUser }) {
+function Landing({ user, setUser, openLogin, onLogout }) {
     const [showLogin, setShowLogin] = useState(false);
     const [showRegister, setShowRegister] = useState(false);
     console.log("Landing user:", user);
@@ -17,13 +17,8 @@ function Landing({ user, setUser }) {
             <main className="landing-page">
                 <NavBar
                     isLoggedIn={user !== null}
-                    onLoginClick={() => setShowLogin(true)}
-                    onLogout={() => {
-                        setUser(null);
-
-                        localStorage.removeItem("token");
-                        localStorage.removeItem("user");
-                    }}
+                    onLoginClick={openLogin}
+                    onLogout={onLogout}
                 />
 
                 <section className="landing-card">
