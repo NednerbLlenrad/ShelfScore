@@ -134,4 +134,73 @@ public class GameRepositoryJdbcClient implements GameRepository{
                 .param(gameId)
                 .update() > 0;
     }
+
+    @Override
+    public List<Game> findPublicGames() {
+
+        final String sql = """
+            select
+                game_id,
+                game_name,
+                image_url,
+                category,
+                min_players,
+                max_players,
+                is_private,
+                app_user_id
+            from game
+            where is_private = false;
+            """;
+
+        return jdbcClient.sql(sql)
+                .query(new GameMapper())
+                .list();
+    }
+
+    @Override
+    public List<Game> findAccessibleGames(int appUserId) {
+
+        final String sql = """
+            select
+                game_id,
+                game_name,
+                image_url,
+                category,
+                min_players,
+                max_players,
+                is_private,
+                app_user_id
+            from game
+            where is_private = false
+                or app_user_id = ?;
+            """;
+
+        return jdbcClient.sql(sql)
+                .param(appUserId)
+                .query(new GameMapper())
+                .list();
+    }
+
+    @Override
+    public List<Game> findByAppUserId(int appUserId) {
+
+        final String sql = """
+        select
+            game_id,
+            game_name,
+            image_url,
+            category,
+            min_players,
+            max_players,
+            is_private,
+            app_user_id
+        from game
+        where app_user_id = ?;
+        """;
+
+        return jdbcClient.sql(sql)
+                .param(appUserId)
+                .query(new GameMapper())
+                .list();
+    }
 }

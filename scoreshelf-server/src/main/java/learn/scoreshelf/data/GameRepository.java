@@ -16,4 +16,10 @@ public interface GameRepository {
 
     @Transactional
     boolean deleteById(int gameId);
+
+    List<Game> findPublicGames();
+
+    List<Game> findAccessibleGames(int appUserId);
+
+    List<Game> findByAppUserId(int appUserId);
 }

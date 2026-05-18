@@ -1,0 +1,175 @@
+.game-form-page {
+    min-height: 100vh;
+
+    color: whitesmoke;
+}
+
+.game-form-card {
+    width: min(90%, 520px);
+
+    margin: 4rem auto;
+    padding: 2rem;
+
+    border-radius: 1rem;
+
+    background-color: rgba(255, 255, 255, 0.05);
+
+    box-shadow:
+        0 0 40px rgba(0, 0, 0, 0.35);
+}
+
+.game-form-card h1 {
+    margin-bottom: 0.5rem;
+}
+
+.game-form-card p {
+    color: #c7d0d9;
+
+    margin-bottom: 2rem;
+}
+
+.game-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 1.25rem;
+}
+
+.game-form label {
+    display: flex;
+    flex-direction: column;
+
+    gap: 0.5rem;
+
+    font-weight: 600;
+
+    color: #c7d0d9;
+}
+
+.game-form input,
+.game-form select {
+    padding: 0.8rem;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 0.5rem;
+
+    background-color: rgba(20, 24, 28, 0.8);
+
+    color: white;
+}
+
+.game-form input:focus,
+.game-form select:focus {
+    outline: none;
+
+    border-color: #2979ff;
+
+    box-shadow:
+        0 0 15px rgba(41, 121, 255, 0.25);
+}
+
+.game-form input[type="file"] {
+    padding: 0.5rem;
+
+    cursor: pointer;
+}
+
+.checkbox-label {
+    flex-direction: row !important;
+
+    align-items: center;
+
+    gap: 0.75rem;
+}
+
+.checkbox-label input {
+    width: auto;
+}
+
+.game-form button:not(.delete-game-button) {
+    margin-top: 1rem;
+
+    padding: 0.9rem 1.2rem;
+
+    border: none;
+    border-radius: 0.5rem;
+
+    background-color: #2979ff;
+
+    color: white;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 20px rgba(41, 121, 255, 0.25);
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.game-form button:not(.delete-game-button):hover {
+    background-color: #4d94ff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 30px rgba(41, 121, 255, 0.4);
+}
+
+.form-error {
+    color: #ff6b6b;
+
+    margin-bottom: 1rem;
+}
+
+.game-image-preview {
+    width: 100%;
+    max-height: 220px;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.current-image-note {
+    color: #c7d0d9;
+    font-size: 0.85rem;
+}
+
+.delete-game-button {
+    margin-top: 0.5rem;
+
+    padding: 0.9rem 1.2rem;
+
+    border: none;
+    outline: none;
+    appearance: none;
+
+    border-radius: 0.5rem;
+
+    background-color: #dc2626;
+    color: white;
+
+    font-weight: 700;
+    cursor: pointer;
+
+    box-shadow:
+        0 0 20px rgba(220, 38, 38, 0.25);
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.delete-game-button:hover {
+    background-color: #ef4444;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 30px rgba(220, 38, 38, 0.4);
+}
