@@ -97,7 +97,17 @@ function GameForm({ user, onLogout, openLogin }) {
         }
 
         apiFetch(`/game/${id}`)
-            .then(setGame)
+            .then((data) =>
+                setGame({
+                    gameName: "",
+                    imageUrl: "",
+                    category: "",
+                    minPlayers: 1,
+                    maxPlayers: 1,
+                    isPrivate: false,
+                    ...data
+                })
+            )
             .catch(() => setError("Could not load game."));
     }, [id, isEdit]);
 
@@ -204,7 +214,14 @@ function GameForm({ user, onLogout, openLogin }) {
                             />
                             Private game
                         </label>
-
+                        {isEdit && (
+                            <button
+                                type="button"
+                                onClick={() => navigate(`/my-games/${id}/score-sheets`)}
+                            >
+                                Manage Score Sheets
+                            </button>
+                        )}
                         <button type="submit">{isEdit ? "Save Changes" : "Add Game"}</button>
                         {isEdit && (
                             <button

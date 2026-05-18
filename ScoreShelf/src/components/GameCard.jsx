@@ -33,7 +33,9 @@ function GameCard({ game, showOwnerActions = false }) {
 
       {showOwnerActions && (
         <div className="game-card-actions">
-          <button type="button">Play</button>
+          <Link className="game-card-play" to={`/my-games/${game.gameId}/play`}>
+            Play
+          </Link>
 
           <Link className="game-card-edit" to={`/my-games/edit/${game.gameId}`}>
             Edit

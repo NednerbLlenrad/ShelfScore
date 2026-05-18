@@ -1,0 +1,147 @@
+.score-results-page {
+    min-height: 100vh;
+
+    color: whitesmoke;
+}
+
+.score-results-card {
+    width: min(90%, 900px);
+
+    margin: 4rem auto;
+    padding: 2.5rem;
+
+    border-radius: 1.25rem;
+
+    background-color: rgba(255, 255, 255, 0.05);
+
+    box-shadow:
+        0 0 40px rgba(0, 0, 0, 0.35);
+}
+
+.score-results-card h1 {
+    margin-bottom: 1rem;
+
+    font-size: 2.5rem;
+}
+
+.score-results-card h2 {
+    margin-bottom: 2rem;
+
+    color: #ffd166;
+
+    font-size: 1.5rem;
+
+    text-shadow:
+        0 0 15px rgba(255, 209, 102, 0.35);
+}
+
+.results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.result-row {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    align-items: center;
+
+    gap: 1rem;
+
+    padding: 1rem 1.25rem;
+
+    border-radius: 0.85rem;
+
+    background-color: rgba(255, 255, 255, 0.06);
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.result-row:hover {
+    transform: translateY(-2px);
+
+    background-color: rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.result-row strong {
+    font-size: 1.1rem;
+}
+
+.result-row span:last-child {
+    color: #4d94ff;
+
+    font-weight: 700;
+}
+
+.finish-scoring-button {
+    margin-top: 2rem;
+    padding: 0.85rem 1.4rem;
+
+    border: none;
+    border-radius: 0.65rem;
+
+    background-color: #22c55e;
+    color: white;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 20px rgba(34, 197, 94, 0.25);
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.finish-scoring-button:hover {
+    background-color: #4ade80;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 30px rgba(34, 197, 94, 0.4);
+}
+
+.score-results-actions {
+    display: flex;
+    gap: 1rem;
+
+    margin-top: 2rem;
+}
+
+.score-results-actions button {
+    padding: 0.85rem 1.3rem;
+
+    border: none;
+    border-radius: 0.65rem;
+
+    background-color: #2979ff;
+    color: white;
+
+    font-weight: 700;
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.score-results-actions button:hover {
+    background-color: #4d94ff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 25px rgba(41, 121, 255, 0.35);
+}

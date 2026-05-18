@@ -38,6 +38,11 @@ public class ScoreSheetController {
         return ResponseEntity.ok(scoreSheet);
     }
 
+    @GetMapping("/game/{gameId}")
+    public List<ScoreSheet> findByGameId(@PathVariable int gameId) {
+        return service.findByGameId(gameId);
+    }
+
     @PostMapping
     public ResponseEntity<Object> add(@Valid @RequestBody ScoreSheet scoreSheet) {
         Result<ScoreSheet> result = service.add(scoreSheet);
