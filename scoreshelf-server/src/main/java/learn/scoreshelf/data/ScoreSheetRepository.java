@@ -10,6 +10,8 @@ public interface ScoreSheetRepository {
 
     ScoreSheet findById(int scoreSheetId);
 
+    List<ScoreSheet> findByGameId(int gameId);
+
     ScoreSheet add(ScoreSheet scoreSheet);
 
     boolean update(ScoreSheet scoreSheet);

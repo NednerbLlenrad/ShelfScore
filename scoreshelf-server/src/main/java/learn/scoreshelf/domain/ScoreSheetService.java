@@ -23,6 +23,10 @@ public class ScoreSheetService {
         return repository.findById(scoreSheetId);
     }
 
+    public List<ScoreSheet> findByGameId(int gameId) {
+        return repository.findByGameId(gameId);
+    }
+
     public Result<ScoreSheet> add(ScoreSheet scoreSheet) {
 
         Result<ScoreSheet> result = validate(scoreSheet);

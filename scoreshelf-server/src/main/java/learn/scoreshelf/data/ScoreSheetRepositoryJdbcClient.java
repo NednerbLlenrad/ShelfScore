@@ -53,6 +53,23 @@ public class ScoreSheetRepositoryJdbcClient implements ScoreSheetRepository {
     }
 
     @Override
+    public List<ScoreSheet> findByGameId(int gameId) {
+        final String sql = """
+                select
+                    score_sheet_id,
+                    game_id,
+                    score_sheet_name
+                from score_sheet
+                where game_id = ?;
+                """;
+
+        return jdbcClient.sql(sql)
+                .param(gameId)
+                .query(new ScoreSheetMapper())
+                .list();
+    }
+
+    @Override
     public ScoreSheet add(ScoreSheet scoreSheet) {
 
         final String sql = """

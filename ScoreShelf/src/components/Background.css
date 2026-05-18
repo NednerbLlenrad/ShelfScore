@@ -1,11 +1,11 @@
 .background {
-    background-color: #14181c;
-    min-height: 100vh;
+  min-height: 100vh;
 
-    background-image:
-        radial-gradient(circle at center,
-            #3b4652 0%,
-            #2e3740 35%,
-            #1f262d 65%,
-            #14181c 100%);
+  background-color: #14181c;
+  background-image:
+    radial-gradient(circle at center,
+      #3b4652 0%,
+      #2e3740 35%,
+      #1f262d 65%,
+      #14181c 100%);
 }
