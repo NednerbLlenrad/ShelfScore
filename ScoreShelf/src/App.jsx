@@ -1,7 +1,5 @@
 import { useState } from "react";
 import Landing from "./pages/Landing";
-<<<<<<< Updated upstream
-=======
 import GameList from "./pages/GameList";
 import LoginModal from "./components/LoginModal";
 import MyGames from "./pages/MyGames";
@@ -10,7 +8,6 @@ import ScoreSheetList from "./pages/ScoreSheetList";
 import PlaySetup from "./pages/PlaySetup";
 import ScoreSession from "./pages/ScoreSession";
 import ScoreResults from "./pages/ScoreResults";
->>>>>>> Stashed changes
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -19,9 +16,6 @@ function App() {
   return savedUser ? JSON.parse(savedUser) : null;
 });
 
-<<<<<<< Updated upstream
-  return <Landing user={user} setUser={setUser} />;
-=======
   function handleLogout() {
     setUser(null);
 
@@ -143,7 +137,6 @@ function App() {
       )}
     </>
   );
->>>>>>> Stashed changes
 }
 
 export default App;
