@@ -1,0 +1,17 @@
+.search-bar {
+    width: min(100%, 320px);
+
+    padding: 0.75rem 1rem;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 0.6rem;
+
+    background-color: rgba(20, 24, 28, 0.85);
+    color: white;
+}
+
+.search-bar:focus {
+    outline: none;
+    border-color: #2979ff;
+    box-shadow: 0 0 15px rgba(41, 121, 255, 0.25);
+}

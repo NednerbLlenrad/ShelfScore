@@ -187,4 +187,20 @@ public class GameController {
 
         return service.findByAppUserId(user.getAppUserId());
     }
+
+    @PostMapping("/{gameId}/copy")
+    public ResponseEntity<Object> copyToLibrary(
+            @PathVariable int gameId,
+            Authentication authentication
+    ) {
+        AppUser user = (AppUser) authentication.getPrincipal();
+
+        Result<Game> result = service.copyToLibrary(gameId, user.getAppUserId());
+
+        if (!result.isSuccess()) {
+            return ErrorResponse.build(result);
+        }
+
+        return ResponseEntity.ok(result.getPayload());
+    }
 }

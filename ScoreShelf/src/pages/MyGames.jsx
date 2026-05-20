@@ -4,13 +4,17 @@ import Background from "../components/Background";
 import NavBar from "../components/NavBar";
 import GameCard from "../components/GameCard";
 import { apiFetch } from "../services/api";
-
+import SearchBar from "../components/SearchBar";
 import "./MyGames.css";
 
 function MyGames({ user, onLogout, openLogin }) {
     const [games, setGames] = useState([]);
     const [error, setError] = useState("");
+    const [searchText, setSearchText] = useState("");
 
+    const filteredGames = games.filter((game) =>
+        game.gameName.toLowerCase().includes(searchText.toLowerCase())
+    );
     useEffect(() => {
         apiFetch("/game/my")
             .then(setGames)
@@ -31,7 +35,7 @@ function MyGames({ user, onLogout, openLogin }) {
                         <div>
                             <h1>My Games</h1>
                         </div>
-
+                        <SearchBar searchText={searchText} setSearchText={setSearchText} />
                         <Link className="add-game-button" to="/my-games/add">
                             Add Game
                         </Link>
@@ -39,8 +43,8 @@ function MyGames({ user, onLogout, openLogin }) {
 
                     {error && <p>{error}</p>}
                     <div className="games-grid">
-                        {games.map((game) => (
-                            <GameCard key={game.gameId} game={game} showOwnerActions={true}/>
+                        {filteredGames.map((game) => (
+                            <GameCard key={game.gameId} game={game} showOwnerActions={true} />
                         ))}
                     </div>
                 </section>

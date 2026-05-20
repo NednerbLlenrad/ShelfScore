@@ -22,3 +22,15 @@
 
     gap: 1.5rem;
 }
+
+.games-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 2rem;
+}
+
+.games-header p {
+    color: #c7d0d9;
+}

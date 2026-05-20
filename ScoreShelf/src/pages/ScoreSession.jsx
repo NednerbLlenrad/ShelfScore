@@ -42,8 +42,25 @@ function ScoreSession({ user, onLogout, openLogin }) {
     }
 
     function calculateRow(playerId, row) {
-        if (row.rowType === "INPUT" || row.rowType === "ACHIEVEMENT") {
+
+        if (row.rowType === "INPUT") {
             return getScore(playerId, row.scoreSheetRowId);
+        }
+
+        if (row.rowType === "ACHIEVEMENT") {
+            const checked =
+                getScore(playerId, row.scoreSheetRowId);
+
+            const points =
+                parseInt(row.expression) || 0;
+
+            return checked ? points : 0;
+        }
+
+        if (row.rowType === "PENALTY") {
+            return -Math.abs(
+                getScore(playerId, row.scoreSheetRowId)
+            );
         }
 
         if (row.rowType === "CALCULATED") {
@@ -54,12 +71,56 @@ function ScoreSession({ user, onLogout, openLogin }) {
             }, 0);
         }
 
+        if (row.rowType === "RATIO") {
+
+            const config =
+                JSON.parse(row.expression || "{}");
+
+            const sourceValue =
+                getScore(playerId, config.sourceRowId);
+
+            const amount =
+                parseInt(config.amount) || 1;
+
+            const points =
+                parseInt(config.points) || 0;
+
+            return Math.floor(sourceValue / amount) * points;
+        }
+
+        if (row.rowType === "RANKED") {
+
+            const config =
+                JSON.parse(row.expression || "{}");
+
+            const sourceRowId =
+                config.sourceRowId;
+
+            const places =
+                config.places || [];
+
+            const rankedPlayers = [...players]
+                .map((player) => ({
+                    playerId: player.gameSessionPlayerId,
+                    score: getScore(
+                        player.gameSessionPlayerId,
+                        sourceRowId
+                    )
+                }))
+                .sort((a, b) => b.score - a.score);
+
+            const placement =
+                rankedPlayers.findIndex(
+                    (player) => player.playerId === playerId
+                );
+
+            return places[placement] || 0;
+        }
+
         if (row.rowType === "TOTAL") {
             return rows
                 .filter((existingRow) =>
-                    existingRow.rowType === "INPUT" ||
-                    existingRow.rowType === "ACHIEVEMENT" ||
-                    existingRow.rowType === "CALCULATED"
+                    existingRow.rowType !== "TOTAL"
                 )
                 .reduce((total, existingRow) => {
                     return total + calculateRow(playerId, existingRow);
@@ -70,7 +131,12 @@ function ScoreSession({ user, onLogout, openLogin }) {
     }
 
     function isReadonlyRow(row) {
-        return row.rowType === "CALCULATED" || row.rowType === "TOTAL";
+        return (
+            row.rowType === "CALCULATED" ||
+            row.rowType === "RATIO" ||
+            row.rowType === "RANKED" ||
+            row.rowType === "TOTAL"
+        );
     }
 
     async function handleFinishScoring() {
@@ -141,6 +207,28 @@ function ScoreSession({ user, onLogout, openLogin }) {
                                             key={`${player.gameSessionPlayerId}-${row.scoreSheetRowId}`}
                                         >
                                             {calculateRow(player.gameSessionPlayerId, row)}
+                                        </div>
+                                    ) : row.rowType === "ACHIEVEMENT" ? (
+                                        <div
+                                            className="achievement-checkbox-wrapper"
+                                            key={`${player.gameSessionPlayerId}-${row.scoreSheetRowId}`}
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                checked={
+                                                    getScore(
+                                                        player.gameSessionPlayerId,
+                                                        row.scoreSheetRowId
+                                                    ) === 1
+                                                }
+                                                onChange={(event) =>
+                                                    updateScore(
+                                                        player.gameSessionPlayerId,
+                                                        row.scoreSheetRowId,
+                                                        event.target.checked ? 1 : 0
+                                                    )
+                                                }
+                                            />
                                         </div>
                                     ) : (
                                         <input

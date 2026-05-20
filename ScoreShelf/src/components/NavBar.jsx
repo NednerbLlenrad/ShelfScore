@@ -1,8 +1,11 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo.svg";
 import "./NavBar.css";
 
 function NavBar({ isLoggedIn, onLoginClick, onLogout, openLogin }) {
+
+    const navigate = useNavigate();
+
     return (
         <nav className="navbar">
             <div className="navbar-left">
@@ -46,7 +49,14 @@ function NavBar({ isLoggedIn, onLoginClick, onLogout, openLogin }) {
                             Account
                         </NavLink>
 
-                        <button className="logout-button" type="button" onClick={onLogout}>
+                        <button
+                            className="logout-button"
+                            type="button"
+                            onClick={() => {
+                                onLogout();
+                                navigate("/");
+                            }}
+                        >
                             Logout
                         </button>
                     </>

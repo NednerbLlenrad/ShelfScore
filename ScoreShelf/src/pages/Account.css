@@ -1,0 +1,101 @@
+.account-page {
+    min-height: 100vh;
+    color: whitesmoke;
+}
+
+.account-content {
+    width: min(90%, 800px);
+    margin: 4rem auto;
+}
+
+.account-content h1 {
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+}
+
+.account-layout {
+    display: flex;
+    justify-content: center;
+}
+
+.account-card {
+    width: 100%;
+    padding: 2rem;
+
+    border-radius: 1rem;
+    background-color: rgba(255, 255, 255, 0.05);
+
+    box-shadow:
+        0 0 40px rgba(0, 0, 0, 0.35);
+}
+
+.account-card h2 {
+    margin-bottom: 1.5rem;
+}
+
+.account-card label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    margin-bottom: 1.25rem;
+
+    color: #c7d0d9;
+    font-weight: 700;
+}
+
+.account-card input {
+    padding: 0.8rem;
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 0.5rem;
+
+    background-color: rgba(20, 24, 28, 0.85);
+    color: white;
+}
+
+.account-card input:focus {
+    outline: none;
+
+    border-color: #2979ff;
+
+    box-shadow:
+        0 0 15px rgba(41, 121, 255, 0.25);
+}
+
+.account-card button {
+    margin-top: 0.5rem;
+
+    padding: 0.85rem 1.2rem;
+
+    border: none;
+    border-radius: 0.5rem;
+
+    background-color: #2979ff;
+    color: white;
+
+    font-weight: 700;
+    cursor: pointer;
+
+    box-shadow:
+        0 0 20px rgba(41, 121, 255, 0.25);
+
+    transition:
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.account-card button:hover {
+    background-color: #4d94ff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 30px rgba(41, 121, 255, 0.4);
+}
+
+.form-success {
+    color: #4ade80;
+    margin-bottom: 1rem;
+}

@@ -4,18 +4,32 @@ import Background from "../components/Background";
 import NavBar from "../components/NavBar";
 import GameCard from "../components/GameCard";
 import { apiFetch } from "../services/api";
-
+import SearchBar from "../components/SearchBar";
 import "./GameList.css";
 
 function GameList({ user, onLogout, openLogin }) {
   const [games, setGames] = useState([]);
   const [error, setError] = useState("");
+  const [searchText, setSearchText] = useState("");
 
+  const filteredGames = games.filter((game) =>
+    game.gameName.toLowerCase().includes(searchText.toLowerCase())
+  );
   useEffect(() => {
     apiFetch("/game")
       .then(setGames)
       .catch(() => setError("Could not load games."));
   }, []);
+
+  function handleCopyToLibrary(gameId) {
+    apiFetch(`/game/${gameId}/copy`, {
+      method: "POST"
+    })
+      .then(() => {
+        setError("");
+      })
+      .catch(() => setError("Could not add game to library."));
+  }
 
   return (
     <Background>
@@ -27,13 +41,15 @@ function GameList({ user, onLogout, openLogin }) {
         />
 
         <section className="games-content">
-          <h1>All Games</h1>
+          <div className="games-header">
+            <h1>All Games</h1>
 
-          {error && <p>{error}</p>}
-
+            {error && <p>{error}</p>}
+            <SearchBar searchText={searchText} setSearchText={setSearchText} />
+          </div>
           <div className="games-grid">
-            {games.map((game) => (
-              <GameCard key={game.gameId} game={game} />
+            {filteredGames.map((game) => (
+              <GameCard key={game.gameId} game={game} showAddToLibrary={user !== null} onAddToLibrary={handleCopyToLibrary} />
             ))}
           </div>
         </section>
