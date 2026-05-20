@@ -14,7 +14,7 @@ function getImageSource(imageUrl) {
   return `http://localhost:8080${imageUrl}`;
 }
 
-function GameCard({ game, showOwnerActions = false }) {
+function GameCard({ game, showOwnerActions = false, showAddToLibrary, onAddToLibrary }) {
   return (
     <article className="game-card">
       <img
@@ -42,6 +42,16 @@ function GameCard({ game, showOwnerActions = false }) {
           </Link>
 
         </div>
+      )}
+
+      {showAddToLibrary && (
+        <button
+          className="game-card-library"
+          type="button"
+          onClick={() => onAddToLibrary(game.gameId)}
+        >
+          Add to Library
+        </button>
       )}
     </article>
   );

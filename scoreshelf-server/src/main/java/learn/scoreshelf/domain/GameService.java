@@ -1,7 +1,11 @@
 package learn.scoreshelf.domain;
 
 import learn.scoreshelf.data.GameRepository;
+import learn.scoreshelf.data.ScoreSheetRepository;
+import learn.scoreshelf.data.ScoreSheetRowRepository;
 import learn.scoreshelf.models.Game;
+import learn.scoreshelf.models.ScoreSheet;
+import learn.scoreshelf.models.ScoreSheetRow;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +14,17 @@ import java.util.List;
 public class GameService {
 
     private final GameRepository repository;
+    private final ScoreSheetRepository scoreSheetRepository;
+    private final ScoreSheetRowRepository scoreSheetRowRepository;
 
-    public GameService(GameRepository repository) {
+    public GameService(
+            GameRepository repository,
+            ScoreSheetRepository scoreSheetRepository,
+            ScoreSheetRowRepository scoreSheetRowRepository
+    ) {
         this.repository = repository;
+        this.scoreSheetRepository = scoreSheetRepository;
+        this.scoreSheetRowRepository = scoreSheetRowRepository;
     }
 
     public List<Game> findAll(){
@@ -31,8 +43,11 @@ public class GameService {
         return repository.findAccessibleGames(appUserId);
     }
 
-    public Result<Game> add(Game game) {
+    public List<Game> findByAppUserId(int appUserId) {
+        return repository.findByAppUserId(appUserId);
+    }
 
+    public Result<Game> add(Game game) {
         Result<Game> result = validate(game);
 
         if (!result.isSuccess()) {
@@ -50,8 +65,62 @@ public class GameService {
         return result;
     }
 
-    public Result<Game> update(Game game) {
+    public Result<Game> copyToLibrary(int originalGameId, int appUserId) {
+        Result<Game> result = new Result<>();
 
+        Game original = repository.findById(originalGameId);
+
+        if (original == null) {
+            result.addMessage("Game not found.", ResultType.NOT_FOUND);
+            return result;
+        }
+
+        Game copy = new Game();
+
+        copy.setGameName(original.getGameName());
+        copy.setImageUrl(original.getImageUrl());
+        copy.setCategory(original.getCategory());
+        copy.setMinPlayers(original.getMinPlayers());
+        copy.setMaxPlayers(original.getMaxPlayers());
+        copy.setPrivate(true);
+        copy.setAppUserId(appUserId);
+
+        Game savedGame = repository.add(copy);
+
+        List<ScoreSheet> originalSheets =
+                scoreSheetRepository.findByGameId(originalGameId);
+
+        for (ScoreSheet originalSheet : originalSheets) {
+            ScoreSheet sheetCopy = new ScoreSheet();
+
+            sheetCopy.setGameId(savedGame.getGameId());
+            sheetCopy.setScoreSheetName(originalSheet.getScoreSheetName());
+
+            ScoreSheet savedSheet = scoreSheetRepository.add(sheetCopy);
+
+            List<ScoreSheetRow> originalRows =
+                    scoreSheetRowRepository.findByScoreSheetId(
+                            originalSheet.getScoreSheetId()
+                    );
+
+            for (ScoreSheetRow originalRow : originalRows) {
+                ScoreSheetRow rowCopy = new ScoreSheetRow();
+
+                rowCopy.setScoreSheetId(savedSheet.getScoreSheetId());
+                rowCopy.setRowName(originalRow.getRowName());
+                rowCopy.setDisplayOrder(originalRow.getDisplayOrder());
+                rowCopy.setRowType(originalRow.getRowType());
+                rowCopy.setExpression(originalRow.getExpression());
+
+                scoreSheetRowRepository.add(rowCopy);
+            }
+        }
+
+        result.setPayload(savedGame);
+        return result;
+    }
+
+    public Result<Game> update(Game game) {
         Result<Game> result = validate(game);
 
         if (!result.isSuccess()) {
@@ -74,9 +143,7 @@ public class GameService {
         return repository.deleteById(gameId);
     }
 
-    //Helpers
     private Result<Game> validate(Game game) {
-
         Result<Game> result = new Result<>();
 
         if (game == null) {
@@ -94,9 +161,4 @@ public class GameService {
 
         return result;
     }
-
-    public List<Game> findByAppUserId(int appUserId) {
-        return repository.findByAppUserId(appUserId);
-    }
 }
-

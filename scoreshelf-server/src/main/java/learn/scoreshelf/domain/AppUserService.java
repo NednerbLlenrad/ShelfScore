@@ -2,6 +2,8 @@ package learn.scoreshelf.domain;
 
 import learn.scoreshelf.data.AppUserRepository;
 import learn.scoreshelf.models.AppUser;
+import learn.scoreshelf.models.UpdateAccountRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +12,9 @@ import java.util.List;
 public class AppUserService {
 
     private final AppUserRepository repository;
+
+    private final BCryptPasswordEncoder encoder =
+            new BCryptPasswordEncoder();
 
     public AppUserService(AppUserRepository repository) {
         this.repository = repository;
@@ -68,6 +73,78 @@ public class AppUserService {
 
     public boolean deleteById(int appUserId) {
         return repository.deleteById(appUserId);
+    }
+
+    public Result<AppUser> updateAccount(UpdateAccountRequest request) {
+
+        Result<AppUser> result = new Result<>();
+
+        AppUser existingUser =
+                repository.findById(request.getAppUserId());
+
+        if (existingUser == null) {
+            result.addMessage(
+                    "User not found.",
+                    ResultType.NOT_FOUND
+            );
+
+            return result;
+        }
+
+        existingUser.setUsername(request.getUsername());
+        existingUser.setEmail(request.getEmail());
+
+        if (request.getNewPassword() != null
+                && !request.getNewPassword().isBlank()) {
+
+            if (request.getCurrentPassword() == null
+                    || request.getCurrentPassword().isBlank()) {
+
+                result.addMessage(
+                        "Current password is required.",
+                        ResultType.INVALID
+                );
+
+                return result;
+            }
+
+            boolean matches = encoder.matches(
+                    request.getCurrentPassword(),
+                    existingUser.getPasswordHash()
+            );
+
+            if (!matches) {
+
+                result.addMessage(
+                        "Current password is incorrect.",
+                        ResultType.INVALID
+                );
+
+                return result;
+            }
+
+            existingUser.setPasswordHash(
+                    encoder.encode(request.getNewPassword())
+            );
+        }
+
+        Result<AppUser> validation = validate(existingUser);
+
+        if (!validation.isSuccess()) {
+            return validation;
+        }
+
+        if (!repository.update(existingUser)) {
+
+            result.addMessage(
+                    "User not found.",
+                    ResultType.NOT_FOUND
+            );
+        }
+
+        result.setPayload(existingUser);
+
+        return result;
     }
 
     //Helpers

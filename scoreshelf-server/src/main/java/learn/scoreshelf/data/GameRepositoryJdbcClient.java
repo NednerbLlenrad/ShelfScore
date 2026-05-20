@@ -125,6 +125,60 @@ public class GameRepositoryJdbcClient implements GameRepository{
     @Override
     public boolean deleteById(int gameId) {
 
+        jdbcClient.sql("""
+            delete se
+            from score_entry se
+            inner join game_session_player gsp
+                on se.game_session_player_id = gsp.game_session_player_id
+            inner join game_session gs
+                on gsp.game_session_id = gs.game_session_id
+            where gs.game_id = ?;
+            """)
+                .param(gameId)
+                .update();
+
+        jdbcClient.sql("""
+            delete gsp
+            from game_session_player gsp
+            inner join game_session gs
+                on gsp.game_session_id = gs.game_session_id
+            where gs.game_id = ?;
+            """)
+                .param(gameId)
+                .update();
+
+        jdbcClient.sql("""
+            delete from game_session
+            where game_id = ?;
+            """)
+                .param(gameId)
+                .update();
+
+        jdbcClient.sql("""
+            delete from score_sheet_row
+            where score_sheet_id in (
+                select score_sheet_id
+                from score_sheet
+                where game_id = ?
+            );
+            """)
+                .param(gameId)
+                .update();
+
+        jdbcClient.sql("""
+            delete from score_sheet
+            where game_id = ?;
+            """)
+                .param(gameId)
+                .update();
+
+        jdbcClient.sql("""
+            delete from user_game_library
+            where game_id = ?;
+            """)
+                .param(gameId)
+                .update();
+
         final String sql = """
             delete from game
             where game_id = ?;
@@ -161,19 +215,19 @@ public class GameRepositoryJdbcClient implements GameRepository{
     public List<Game> findAccessibleGames(int appUserId) {
 
         final String sql = """
-            select
-                game_id,
-                game_name,
-                image_url,
-                category,
-                min_players,
-                max_players,
-                is_private,
-                app_user_id
-            from game
-            where is_private = false
-                or app_user_id = ?;
-            """;
+        select
+            game_id,
+            game_name,
+            image_url,
+            category,
+            min_players,
+            max_players,
+            is_private,
+            app_user_id
+        from game
+        where is_private = false
+            and app_user_id <> ?;
+        """;
 
         return jdbcClient.sql(sql)
                 .param(appUserId)

@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import learn.scoreshelf.domain.AppUserService;
 import learn.scoreshelf.domain.Result;
 import learn.scoreshelf.models.AppUser;
+import learn.scoreshelf.models.UpdateAccountRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -70,14 +71,13 @@ public class AppUserController {
     @PutMapping("/{appUserId}")
     public ResponseEntity<Object> update(
             @PathVariable int appUserId,
-            @Valid @RequestBody AppUser appUser
+            @RequestBody UpdateAccountRequest request
     ) {
-
-        if (appUserId != appUser.getAppUserId()) {
+        if (appUserId != request.getAppUserId()) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
-        Result<AppUser> result = service.update(appUser);
+        Result<AppUser> result = service.updateAccount(request);
 
         if (!result.isSuccess()) {
             return ErrorResponse.build(result);

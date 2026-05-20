@@ -53,6 +53,36 @@ function ScoreSheetRowForm({ scoreSheetId, rows, onAddRow }) {
         });
     }
 
+    function setRatioField(field, value) {
+        const config = JSON.parse(row.expression || "{}");
+
+        const updatedConfig = {
+            ...config,
+            [field]: value
+        };
+
+        setRow({
+            ...row,
+            expression: JSON.stringify(updatedConfig)
+        });
+    }
+
+    function setRankedPlaces(value) {
+        const config = JSON.parse(row.expression || "{}");
+
+        const places = value
+            .split(",")
+            .map((place) => parseInt(place.trim()) || 0);
+
+        setRow({
+            ...row,
+            expression: JSON.stringify({
+                ...config,
+                places
+            })
+        });
+    }
+
     return (
         <form className="score-sheet-row-form" onSubmit={handleSubmit}>
             <input
@@ -66,8 +96,10 @@ function ScoreSheetRowForm({ scoreSheetId, rows, onAddRow }) {
             <select name="rowType" value={row.rowType} onChange={handleChange}>
                 <option value="INPUT">Input</option>
                 <option value="CALCULATED">Calculated</option>
+                <option value="RATIO">Ratio</option>
                 <option value="RANKED">Ranked</option>
                 <option value="ACHIEVEMENT">Achievement</option>
+                <option value="PENALTY">Penalty</option>
                 <option value="TOTAL">Total</option>
             </select>
 
@@ -78,7 +110,108 @@ function ScoreSheetRowForm({ scoreSheetId, rows, onAddRow }) {
                 value={row.displayOrder}
                 onChange={handleChange}
             />
+            {row.rowType === "RATIO" && (
+                <div className="ratio-rule-builder">
+                    <select
+                        value={JSON.parse(row.expression || "{}").sourceRowId || ""}
+                        onChange={(event) =>
+                            setRatioField("sourceRowId", parseInt(event.target.value))
+                        }
+                    >
+                        <option value="">Choose source row</option>
 
+                        {rows
+                            .filter((existingRow) => existingRow.rowType === "INPUT")
+                            .map((existingRow) => (
+                                <option
+                                    key={existingRow.scoreSheetRowId}
+                                    value={existingRow.scoreSheetRowId}
+                                >
+                                    {existingRow.rowName}
+                                </option>
+                            ))}
+                    </select>
+
+                    <input
+                        type="number"
+                        min="1"
+                        placeholder="Every"
+                        value={JSON.parse(row.expression || "{}").amount || ""}
+                        onChange={(event) =>
+                            setRatioField("amount", parseInt(event.target.value))
+                        }
+                    />
+
+                    <input
+                        type="number"
+                        placeholder="Points"
+                        value={JSON.parse(row.expression || "{}").points || ""}
+                        onChange={(event) =>
+                            setRatioField("points", parseInt(event.target.value))
+                        }
+                    />
+                </div>
+            )}
+            {row.rowType === "RANKED" && (
+                <div className="ranked-rule-builder">
+
+                    <select
+                        value={JSON.parse(row.expression || "{}").sourceRowId || ""}
+                        onChange={(event) => {
+                            const config =
+                                JSON.parse(row.expression || "{}");
+
+                            setRow({
+                                ...row,
+                                expression: JSON.stringify({
+                                    ...config,
+                                    sourceRowId: parseInt(event.target.value)
+                                })
+                            });
+                        }}
+                    >
+                        <option value="">
+                            Choose ranking row
+                        </option>
+
+                        {rows
+                            .filter((existingRow) =>
+                                existingRow.rowType === "INPUT"
+                            )
+                            .map((existingRow) => (
+                                <option
+                                    key={existingRow.scoreSheetRowId}
+                                    value={existingRow.scoreSheetRowId}
+                                >
+                                    {existingRow.rowName}
+                                </option>
+                            ))}
+                    </select>
+
+                    <input
+                        type="text"
+                        placeholder="5,2,1"
+                        value={
+                            (
+                                JSON.parse(row.expression || "{}").places || []
+                            ).join(",")
+                        }
+                        onChange={(event) =>
+                            setRankedPlaces(event.target.value)
+                        }
+                    />
+
+                </div>
+            )}
+            {row.rowType === "ACHIEVEMENT" && (
+                <input
+                    type="number"
+                    name="expression"
+                    placeholder="Points awarded"
+                    value={row.expression}
+                    onChange={handleChange}
+                />
+            )}
             {(row.rowType === "CALCULATED") && (
                 <div className="calculation-dropdown">
                     <button
