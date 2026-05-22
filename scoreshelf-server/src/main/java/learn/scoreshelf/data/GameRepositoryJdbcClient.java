@@ -5,6 +5,7 @@ import learn.scoreshelf.models.Game;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -122,37 +123,42 @@ public class GameRepositoryJdbcClient implements GameRepository{
                 .update() > 0;
     }
 
+    @Transactional
     @Override
     public boolean deleteById(int gameId) {
 
+<<<<<<< Updated upstream
+=======
         jdbcClient.sql("""
-            delete se
-            from score_entry se
-            inner join game_session_player gsp
-                on se.game_session_player_id = gsp.game_session_player_id
-            inner join game_session gs
-                on gsp.game_session_id = gs.game_session_id
-            where gs.game_id = ?;
-            """)
+        delete se
+        from score_entry se
+        inner join game_session_player gsp
+            on se.game_session_player_id = gsp.game_session_player_id
+        inner join game_session gs
+            on gsp.game_session_id = gs.game_session_id
+        where gs.game_id = ?;
+        """)
                 .param(gameId)
                 .update();
 
         jdbcClient.sql("""
-            delete gsp
-            from game_session_player gsp
-            inner join game_session gs
-                on gsp.game_session_id = gs.game_session_id
-            where gs.game_id = ?;
-            """)
+        delete gsp
+        from game_session_player gsp
+        inner join game_session gs
+            on gsp.game_session_id = gs.game_session_id
+        where gs.game_id = ?;
+        """)
                 .param(gameId)
                 .update();
 
-        jdbcClient.sql("""
-            delete from game_session
-            where game_id = ?;
-            """)
+        int deletedSessions = jdbcClient.sql("""
+        delete from game_session
+        where game_id = ?;
+        """)
                 .param(gameId)
                 .update();
+
+        System.out.println("Deleted sessions: " + deletedSessions);
 
         jdbcClient.sql("""
             delete from score_sheet_row
@@ -179,6 +185,7 @@ public class GameRepositoryJdbcClient implements GameRepository{
                 .param(gameId)
                 .update();
 
+>>>>>>> Stashed changes
         final String sql = """
             delete from game
             where game_id = ?;

@@ -19,7 +19,7 @@ function NavBar({ isLoggedIn, onLoginClick, onLogout, openLogin }) {
                     </NavLink>
 
                     <NavLink className="custom-link" to="/games">
-                        All Games
+                        Community Games
                     </NavLink>
 
                     {isLoggedIn ? (

@@ -22,10 +22,14 @@ function Stats({ user, onLogout, openLogin }) {
     }, {});
 
     useEffect(() => {
-        apiFetch("/stats")
+        if (!user) {
+            return;
+        }
+
+        apiFetch(`/stats/${user.appUserId}`)
             .then(setStats)
             .catch(() => setError("Could not load stats."));
-    }, []);
+    }, [user]);
 
     return (
         <Background>

@@ -60,6 +60,16 @@ function PlaySetup({ user, onLogout, openLogin }) {
                 return;
             }
 
+            if (cleanPlayers.length < game.minPlayers) {
+                setError(`This game requires at least ${game.minPlayers} players.`);
+                return;
+            }
+
+            if (cleanPlayers.length > game.maxPlayers) {
+                setError(`This game supports at most ${game.maxPlayers} players.`);
+                return;
+            }
+
             const session = await apiFetch("/game-session", {
                 method: "POST",
                 body: JSON.stringify({

@@ -46,6 +46,24 @@ function ScoreResults({ user, onLogout, openLogin }) {
         });
     }
 
+    async function handleSaveAndViewStats() {
+        for (const player of results) {
+            await apiFetch(`/game-session-player/${player.gameSessionPlayerId}`, {
+                method: "PUT",
+                body: JSON.stringify({
+                    gameSessionPlayerId: player.gameSessionPlayerId,
+                    gameSessionId: Number(gameSessionId),
+                    playerId: player.playerId || null,
+                    playerName: player.playerName,
+                    totalScore: player.totalScore,
+                    isWinner: player.isWinner
+                })
+            });
+        }
+
+        navigate("/stats");
+    }
+
     return (
         <Background>
             <main className="score-results-page">
@@ -83,7 +101,7 @@ function ScoreResults({ user, onLogout, openLogin }) {
 
                         <button
                             type="button"
-                            onClick={() => navigate("/stats")}
+                            onClick={handleSaveAndViewStats}
                         >
                             Stats
                         </button>

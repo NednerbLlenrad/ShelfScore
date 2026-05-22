@@ -21,6 +21,8 @@
     justify-content: center;
 
     gap: 1.5rem;
+<<<<<<< Updated upstream
+=======
 }
 
 .games-header {
@@ -33,4 +35,63 @@
 
 .games-header p {
     color: #c7d0d9;
+}
+
+.success-message {
+    position: fixed;
+
+    top: 2rem;
+    right: 2rem;
+
+    background-color: #1f3d2a;
+    color: #7dff9b;
+
+    border: 1px solid #4caf72;
+    border-radius: 12px;
+
+    padding: 1rem 1.5rem;
+
+    font-weight: 600;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+
+    z-index: 1000;
+
+    animation: fadeIn 0.2s ease;
+}
+
+.error-message {
+    position: fixed;
+
+    top: 2rem;
+    right: 2rem;
+
+    background-color: #3d1f1f;
+    color: #ff7b7b;
+
+    border: 1px solid #ff7b7b;
+    border-radius: 12px;
+
+    padding: 1rem 1.5rem;
+
+    font-weight: 600;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+
+    z-index: 1000;
+
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+>>>>>>> Stashed changes
 }

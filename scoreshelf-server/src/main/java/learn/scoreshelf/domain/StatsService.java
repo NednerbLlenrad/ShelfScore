@@ -15,7 +15,7 @@ public class StatsService {
         this.repository = repository;
     }
 
-    public List<Stats> findAll() {
-        return repository.findAll();
+    public List<Stats> findByAppUserId(int appUserId) {
+        return repository.findByAppUserId(appUserId);
     }
 }

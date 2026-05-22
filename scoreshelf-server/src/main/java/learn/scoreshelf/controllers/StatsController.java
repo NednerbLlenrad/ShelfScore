@@ -17,8 +17,8 @@ public class StatsController {
         this.service = service;
     }
 
-    @GetMapping
-    public List<Stats> findAll() {
-        return service.findAll();
+    @GetMapping("/{appUserId}")
+    public List<Stats> findByAppUserId(@PathVariable int appUserId) {
+        return service.findByAppUserId(appUserId);
     }
 }

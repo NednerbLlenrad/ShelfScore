@@ -142,10 +142,27 @@ public class GameSessionRepositoryJdbcClient implements GameSessionRepository {
     @Override
     public boolean deleteById(int gameSessionId) {
 
+        jdbcClient.sql("""
+        delete se
+        from score_entry se
+        inner join game_session_player gsp
+            on se.game_session_player_id = gsp.game_session_player_id
+        where gsp.game_session_id = ?;
+        """)
+                .param(gameSessionId)
+                .update();
+
+        jdbcClient.sql("""
+        delete from game_session_player
+        where game_session_id = ?;
+        """)
+                .param(gameSessionId)
+                .update();
+
         final String sql = """
-                delete from game_session
-                where game_session_id = ?;
-                """;
+        delete from game_session
+        where game_session_id = ?;
+        """;
 
         return jdbcClient.sql(sql)
                 .param(gameSessionId)
